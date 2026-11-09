@@ -17,6 +17,21 @@ colores = {
 
 #FUNCIONES
 
+def arriba():
+    pass
+
+def abajo():
+    pass
+
+def izquierda():
+    pass
+
+def derecha():
+    pass
+
+def dibujar_snake():
+    pass
+
 
 #CODIGO PRINCIPAL / FUNCION PRINCIPAL
 def snake():
@@ -72,6 +87,10 @@ def snake():
                     outline="#000000"
                 )
 
+    ventana.bind("<Up>", arriba)
+    ventana.bind("<Down>", abajo)
+    ventana.bind("<Left>", izquierda)
+    ventana.bind("<Right>", derecha)
     ventana.mainloop()
 
 snake()
