@@ -3,34 +3,85 @@ import tkinter as tk
 from tkinter import messagebox
 
 #VARIABLES GLOBALES
-tablero = [
-    [0,0,0,0,0,0,0,0,0,0],
-    [0,0,0,0,0,0,0,0,0,0],
-    [0,0,0,0,0,1,0,0,0,0],
-    [0,0,0,0,0,0,0,0,0,0],
-    [0,0,0,0,0,0,0,0,0,0]
-]
+
+def cambiar_tablero():
+    global tablero
+    tablero = [
+        [0,0,0,0,0,0,0,0,0,0],
+        [0,0,0,0,0,0,0,0,0,0],
+        [0,0,0,0,0,0,0,0,0,0],
+        [0,0,0,0,0,0,0,0,0,0],
+        [0,0,0,0,0,0,0,0,0,0]
+    ]
+    tablero[head["x"]][head["y"]] = 1
 
 colores = {
     "COLOR_FONDO" : "#6e85d4"
 }
 
+head = {
+    "x":0,
+    "y":0
+}
+
+cambiar_tablero()
+
 #FUNCIONES
 
 def arriba():
-    pass
+    global head
+    head["x"] -= 1
+    cambiar_tablero()
+    borrar_tablero()
+    dibujar_tablero()
+
 
 def abajo():
-    pass
+    global head
+    head["x"] += 1
+    cambiar_tablero()
+    borrar_tablero()
+    dibujar_tablero()
 
 def izquierda():
-    pass
+    global head
+    head["y"] -= 1
+    cambiar_tablero()
+    borrar_tablero()
+    dibujar_tablero()
 
 def derecha():
-    pass
+    global head
+    head["y"] += 1
+    cambiar_tablero()
+    borrar_tablero()
+    dibujar_tablero()
 
-def dibujar_snake():
-    pass
+def borrar_tablero():
+    canva.delete("all")
+
+def dibujar_tablero():
+    for fila in range(0,5):
+        for columna in range(0,10):
+            x1 = (columna * 75) + 10
+            x2 = x1 + 75
+            y1 = (fila * 75) + 10
+            y2 = y1 + 75
+
+            canva.create_rectangle(
+                x1,y1, #COORDENADAS DE INICIO
+                x2,y2, #TAMAÑO DEL RECTANGULO
+                outline="#000000",
+                width=1
+            )
+
+            if tablero[fila][columna] == 1:
+                canva.create_oval(
+                    x1+5, y1+5,
+                    x2-5, y2-5,
+                    fill="#00ff00",
+                    outline="#000000"
+                )
 
 
 #CODIGO PRINCIPAL / FUNCION PRINCIPAL
@@ -56,6 +107,7 @@ def snake():
         image=titulo
     )
 
+    global canva
     canva = tk.Canvas( #CANVAS SON LOS LIENZOS SOBRE LOS QUE DIBUJARÉ
         ventana,
         width = 800,
@@ -65,32 +117,12 @@ def snake():
     )
     canva.pack()
 
-    for fila in range(0,5):
-        for columna in range(0,10):
-            x1 = (columna * 75) + 10
-            x2 = x1 + 75
-            y1 = (fila * 75) + 10
-            y2 = y1 + 75
+    dibujar_tablero()
 
-            canva.create_rectangle(
-                x1,y1, #COORDENADAS DE INICIO
-                x2,y2, #TAMAÑO DEL RECTANGULO
-                outline="#000000",
-                width=1
-            )
-
-            if tablero[fila][columna] == 1:
-                canva.create_oval(
-                    x1+5, y1+5,
-                    x2-5, y2-5,
-                    fill="#00ff00",
-                    outline="#000000"
-                )
-
-    ventana.bind("<Up>", arriba)
-    ventana.bind("<Down>", abajo)
-    ventana.bind("<Left>", izquierda)
-    ventana.bind("<Right>", derecha)
+    ventana.bind("<Up>", lambda event: arriba())
+    ventana.bind("<Down>",lambda event: abajo())
+    ventana.bind("<Left>", lambda event: izquierda())
+    ventana.bind("<Right>", lambda event: derecha())
     ventana.mainloop()
 
 snake()
