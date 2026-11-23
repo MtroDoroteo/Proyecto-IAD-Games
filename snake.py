@@ -15,7 +15,7 @@ tablero=[
 
 vivo = True
 
-posicion = {
+head = {
     'x':2,
     'y':5
 }
@@ -39,11 +39,11 @@ def generar_manzana():
 
 def reiniciar_todo():
     global vivo
-    limpiar_tablero(posicion["x"], posicion["y"])
+    limpiar_tablero(head["x"], head["y"])
     quitar_manzanas(manzana["x"], manzana["y"])
-    posicion["x"] = 2
-    posicion["y"] = 5
-    tablero[posicion["x"]][posicion["y"]] = 1
+    head["x"] = 2
+    head["y"] = 5
+    tablero[head["x"]][head["y"]] = 1
     vivo = True
     generar_manzana()
     dibujar_tablero()
@@ -51,11 +51,11 @@ def reiniciar_todo():
 def arriba():
     global vivo
     if vivo:
-        if posicion["x"] > 0:
-            limpiar_tablero(posicion["x"], posicion["y"])
-            cambiar_tablero(posicion["x"]-1,posicion["y"], 1)
+        if head["x"] > 0:
+            limpiar_tablero(head["x"], head["y"])
+            cambiar_tablero(head["x"]-1,head["y"], 1)
 
-            posicion["x"] -= 1
+            head["x"] -= 1
 
             comprobar_comer()
 
@@ -67,10 +67,10 @@ def arriba():
 def abajo():
     global vivo
     if vivo:
-        if posicion["x"]+1 < 5:
-            limpiar_tablero(posicion["x"], posicion["y"])
-            cambiar_tablero(posicion["x"]+1, posicion["y"], 1)
-            posicion["x"] += 1
+        if head["x"]+1 < 5:
+            limpiar_tablero(head["x"], head["y"])
+            cambiar_tablero(head["x"]+1, head["y"], 1)
+            head["x"] += 1
             
             comprobar_comer()
             
@@ -82,10 +82,10 @@ def abajo():
 def izquierda():
     global vivo
     if vivo:
-        if posicion["y"] > 0:
-            limpiar_tablero(posicion["x"], posicion["y"])
-            cambiar_tablero(posicion["x"], posicion["y"]-1, 1)
-            posicion["y"] -= 1
+        if head["y"] > 0:
+            limpiar_tablero(head["x"], head["y"])
+            cambiar_tablero(head["x"], head["y"]-1, 1)
+            head["y"] -= 1
             
             comprobar_comer()
             
@@ -97,10 +97,10 @@ def izquierda():
 def derecha():
     global vivo
     if vivo:
-        if posicion["y"] < 9:
-            limpiar_tablero(posicion["x"], posicion["y"])
-            cambiar_tablero(posicion["x"], posicion["y"]+1, 1)
-            posicion["y"] += 1
+        if head["y"] < 9:
+            limpiar_tablero(head["x"], head["y"])
+            cambiar_tablero(head["x"], head["y"]+1, 1)
+            head["y"] += 1
             
             comprobar_comer()
             
@@ -111,7 +111,7 @@ def derecha():
 
 #FUNCIONES AUXILIARES
 def comprobar_comer():
-    if posicion["x"] == manzana["x"] and posicion["y"] == manzana["y"]:
+    if head["x"] == manzana["x"] and head["y"] == manzana["y"]:
         generar_manzana()
 
 def cambiar_tablero(x,y,valor):
